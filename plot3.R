@@ -11,7 +11,10 @@ library(dplyr)
 setwd("~/exDataAna")
 sourcefile <- "household_power_consumption.txt"
 ## Read data from source file
-epcDataset <- read.table(sourcefile, header = TRUE, sep=";", stringsAsFactors = FALSE, dec = ".")
+epcDataset <- read.table(sourcefile, header = TRUE, sep=";", stringsAsFactors = FALSE, dec = ".", na.strings = "?")
+
+## Remove rows with missing values
+epcDataset <- na.omit(epcDataset)
 
 ## Extract required data from the dates 2007-02-01 and 2007-02-02.
 extData <- filter(epcDataset, epcDataset$Date =="1/2/2007" | epcDataset$Date =="2/2/2007")
@@ -27,5 +30,5 @@ png("plot3.png", width = 480, height = 480)
 plot(dateData, subMmetering1, type = "l", xlab ="", ylab = "Energy sub metering")
 lines(dateData, subMmetering2, col="red")
 lines(dateData, subMmetering3, col="blue")
-legend("topright", lwd=2, col=c("black", "red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+legend("topright", lwd=2.5, col=c("black", "red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 dev.off()

@@ -12,7 +12,10 @@ library(dplyr)
 setwd("~/exDataAna")
 sourcefile <- "household_power_consumption.txt"
 ## Read data from source file
-epcDataset <- read.table(sourcefile, header = TRUE, sep=";", stringsAsFactors = FALSE, dec = ".")
+epcDataset <- read.table(sourcefile, header = TRUE, sep=";", stringsAsFactors = FALSE, dec = ".", na.strings = "?")
+
+## Remove rows with missing values
+epcDataset <- na.omit(epcDataset)
 
 ## Extract required data from the dates 2007-02-01 and 2007-02-02.
 extData <- filter(epcDataset, epcDataset$Date =="1/2/2007" | epcDataset$Date =="2/2/2007")
